@@ -16,23 +16,21 @@ class Quiz extends Component {
         })
     }
 
+    handleResetClick () {
+        this.setState({quiz_position : 1})
+    }
     render() {
         const isQuizEnd =((this.state.quiz_position -1) === quizData.quiz_questions.lenght)
-        if(isQuizEnd===true) {
+     
             return (
                 <div>
-                    <QuizEnd />
+                    {isQuizEnd ? <QuizEnd resetClickHandler={this.handleResetClick.bind(this)}/> :
+                        <QuizQuestion quiz_question={quizData.quiz_questions[this.state.quiz_position-1]} 
+                                        showNextQuestionHandler={this.showNextQuestion.bind(this)}/>
+                    }  
                 </div>
             )
-        }else {
-            return (
-                <div>
-                    <QuizQuestion showNextQuestionHandler={this.showNextQuestion.bind(this)} 
-                        quiz_question= {quizData.quiz_questions[this.state.quiz_position-1]}/>
-                </div>
-            )
-        } 
-    }
+        }
 }
 
 export default Quiz    
